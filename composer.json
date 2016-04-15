@@ -1,0 +1,15 @@
+{
+    "name": "pleio/recaptcha",
+    "description": "Prevent spammers on your site.",
+    "type": "elgg-plugin",
+    "keywords": ["elgg", "plugin", "captcha"],
+    "license": "GPL-2.0",
+    "support": {
+        "source": "https://github.com/Pleio/recaptcha",
+        "issues": "https://github.com/Pleio/recaptcha/issues"
+    },
+    "require": {
+        "composer/installers": "^1.0.8",
+        "guzzlehttp/guzzle": "~6.0"
+    }
+}
