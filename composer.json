@@ -10,6 +10,6 @@
     },
     "require": {
         "composer/installers": "^1.0.8",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~5.0"
     }
 }
