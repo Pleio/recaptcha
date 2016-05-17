@@ -1,4 +1,7 @@
 # reCAPTCHA for Elgg 1.8
+
+<img src="https://cloud.githubusercontent.com/assets/5213690/14558037/7e6a10ee-0300-11e6-88c0-3f247815d2f3.png" width=500>
+
 This plugin protects your Elgg site against spammers with [reCAPTCHA](https://www.google.com/recaptcha/).
 
 ## Installation instructions
