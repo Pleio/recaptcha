@@ -8,7 +8,7 @@ function recaptcha_init() {
         return;
     }
 
-    elgg_register_js('recaptcha', 'https://www.google.com/recaptcha/api.js');
+    elgg_register_js('recaptcha', 'https://www.google.com/recaptcha/api.js?hl=' . get_current_language());
     elgg_register_plugin_hook_handler('actionlist', 'captcha', 'image_captcha_actionlist_hook');
 
     $actions = array(
