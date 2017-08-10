@@ -1,3 +1,9 @@
+<?php
+$noyes_options = array(
+    "no" => elgg_echo("option:no"),
+    "yes" => elgg_echo("option:yes")
+);
+?>
 
 <p>
     <label><?php echo elgg_echo('recaptcha:settings:site_key'); ?></label><br />
@@ -19,4 +25,14 @@
             'target' => '_blank'
         ));
     ?>.</div>
+</p>
+<p>
+    <label><?php echo elgg_echo('recaptcha:limit_registration'); ?></label><br />
+    <?php echo elgg_view("input/dropdown", array(
+        "name" => "params[limit_registration]",
+        "value" => $vars['entity']->limit_registration,
+        "options_values" => $noyes_options,
+        "class" => "mls"
+    )); ?>
+    <div class="elgg-subtext"><?php echo elgg_echo('recaptcha:limit_registration:explanation'); ?>
 </p>

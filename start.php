@@ -35,9 +35,12 @@ function is_recaptcha_enabled() {
 function recaptcha_action_hook($hook, $entity_type, $returnvalue, $params) {
     $response = get_input('g-recaptcha-response');
 
-    if ($response && recaptcha_validate_code($response)) {
-        return true;
-    } else {
+    if (!recaptcha_validate_location()) {
+        register_error(elgg_echo('recaptcha:invalid_request'));
+        forward(REFERER);
+    }
+
+    if (!$response || !recaptcha_validate_code($response)) {
         register_error(elgg_echo('recaptcha:could_not_validate'));
         forward(REFERER);
     }
@@ -63,6 +66,38 @@ function recaptcha_validate_code($response) {
         }
     } catch (RequestException $e) {
         return false;
+    }
+}
+
+function recaptcha_validate_location() {
+    $limit_registration = elgg_get_plugin_setting("limit_registration", "recaptcha");
+    if ($limit_registration !== "yes") {
+        return true;
+    }
+
+    $valid_countries = ["EU", "AD", "AL", "AT", "BA", "BE", "BG", "BY", "CH", "CS", "CZ", "DE", "DK", "EE", "ES", "FI", "FO", "FR", "FX", "GB", "GI", "GR", "HR", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MD", "MK", "MT", "NL", "NO", "PL", "PT", "RO", "SE", "SI", "SJ", "SK", "SM", "UA", "VA"];
+
+    $ip = filter_var(recaptcha_get_user_ip(), FILTER_VALIDATE_IP);
+
+    if (!$ip) {
+        return true;
+    }
+
+    $client = new GuzzleHttp\Client();
+
+    try {
+        $response = $client->get("https://freegeoip.net/json/" . $ip);
+        $data = $response->json();
+
+        if (!$data["country_code"]) {
+            return false;
+        }
+
+        if (in_array($data["country_code"], $valid_countries)) {
+            return true;
+        }
+    } catch (RequestException $e) {
+        return true;
     }
 }
 
